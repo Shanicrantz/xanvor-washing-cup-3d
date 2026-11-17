@@ -39,6 +39,14 @@
   .note { font-size:12px; color:#555; margin-top:10px; }
   [hidden] { display:none !important; }
   .dim { position:absolute; transform:translate(-50%,-50%); pointer-events:none; white-space:nowrap; font-size:11px; line-height:1; padding:3px 6px; border-radius:5px; background:rgba(255,255,255,.88); color:var(--ink); border:1px solid rgba(31,58,61,.35); font-variant-numeric:tabular-nums; }
+  #stage::after { content:""; position:absolute; inset:0; pointer-events:none; z-index:2; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='270' height='190'%3E%3Ctext x='135' y='100' text-anchor='middle' transform='rotate(-28 135 95)' font-family='Helvetica,Arial,sans-serif' font-size='22' letter-spacing='9' font-weight='600' fill='%231f3a3d' fill-opacity='0.10'%3EXANVOR%3C/text%3E%3C/svg%3E"); background-size:270px 190px; }
+  .dim, .hint, .mark { z-index:3; }
+  #msg { z-index:4; }
+  .mark { position:absolute; right:12px; bottom:10px; font-size:11px; letter-spacing:.06em; color:var(--ink); background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px; pointer-events:none; }
+  .mark b { letter-spacing:.3em; color:#9a7a34; }
+  #gate .gbrand { width:100%; text-align:center; letter-spacing:.45em; font-size:20px; font-weight:600; color:#9a7a34; padding-left:.45em; }
+  #gate .gsub { width:100%; text-align:center; font-size:12px; color:#555; margin-bottom:6px; }
+  #gate .gfoot { width:100%; margin:4px 0 0; font-size:11px; color:#777; text-align:center; }
   .hint { position:absolute; left:12px; bottom:10px; font-size:12px; color:#555; background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px; }
 </style>
 </head>
@@ -49,10 +57,13 @@
   <div class="sub">Mirror-polished steel bowl · two resin handles set 75° apart · separate travertine base with engraved logo — the cup rests on the base, it is not fixed</div>
 </header>
 <form id="gate" autocomplete="off">
+  <div class="gbrand">XANVOR</div>
+  <div class="gsub">Private design review · Washing cup</div>
   <label for="pw">Password</label>
   <input id="pw" type="password" required autofocus>
   <button id="go" type="submit">Open</button>
   <p id="gerr" role="alert"></p>
+  <p class="gfoot">Confidential · © XANVOR · not for circulation</p>
 </form>
 <div class="bar" hidden>
   <button data-view="angle" class="on">Handles</button>
@@ -69,6 +80,7 @@
     <canvas id="c"></canvas>
     <div id="msg"><div><b>Loading 3D model…</b><span id="pct"></span></div></div>
     <div class="hint">Drag to rotate · scroll or pinch to zoom</div>
+    <div class="mark"><b>XANVOR</b> · Confidential design review</div>
   </div>
   <aside>
     <h2>Parts</h2>
@@ -79,6 +91,7 @@
       <tr><td>Base</td><td>Natural travertine</td></tr>
       <tr><td>Logo</td><td>Engraved, dark colour fill</td></tr>
     </table>
+    <p class="note"><b>© XANVOR.</b> Design shared for review only; please do not copy or circulate.</p>
     <p class="note">Digital review model. Colours and stone texture are indicative; natural stone varies piece to piece. Sizes are subject to confirmation on a physical sample.</p>
   </aside>
 </main>
