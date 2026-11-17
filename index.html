@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>XANVOR · Washing cup · R10</title>
+<style>
+  :root { --ink:#1f3a3d; --gold:#c9a45c; --paper:#f3f1ec; --line:#d9d5cb; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--paper); color:#222; font:14px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  header { background:var(--ink); color:#fff; padding:12px 16px; display:flex; gap:16px; align-items:baseline; flex-wrap:wrap; border-bottom:2px solid var(--gold); }
+  header .brand { letter-spacing:.35em; color:var(--gold); font-weight:600; }
+  header h1 { margin:0; font-size:17px; font-weight:600; }
+  header .rev { background:var(--gold); color:#2a2210; border-radius:4px; padding:1px 7px; font-size:11px; font-weight:700; }
+  header .sub { width:100%; font-size:12px; opacity:.85; }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:10px 16px; background:#fff; border-bottom:1px solid var(--line); }
+  .bar button, .bar select { font:inherit; padding:6px 11px; border:1px solid #b9b4a8; border-radius:7px; background:#fff; color:#222; cursor:pointer; }
+  .bar button.on { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .bar label { display:flex; gap:6px; align-items:center; }
+  main { display:flex; flex-wrap:wrap; height:calc(100% - 118px); min-height:420px; }
+  #stage { position:relative; flex:1 1 420px; min-height:380px; overflow:hidden; }
+  #stage canvas { position:absolute; inset:0; display:block; width:100%; height:100%; touch-action:none; }
+  #msg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:24px; color:#444; background:var(--paper); }
+  #msg b { display:block; font-size:16px; margin-bottom:6px; }
+  #gate { max-width:340px; margin:12vh auto 0; padding:22px 20px; background:#fff; border:1px solid var(--line); border-radius:10px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  #gate label { width:100%; font-weight:600; color:var(--ink); }
+  #gate input { flex:1 1 160px; min-width:0; font:inherit; padding:8px 10px; border:1px solid #b9b4a8; border-radius:7px; }
+  #gate button { font:inherit; padding:8px 16px; border:0; border-radius:7px; background:var(--ink); color:#fff; cursor:pointer; }
+  #gate button:disabled { opacity:.6; cursor:default; }
+  #gerr { width:100%; margin:0; min-height:1.4em; color:#a33; font-size:13px; }
+  aside { flex:0 1 300px; max-height:100%; background:#fff; border-left:1px solid var(--line); padding:14px 16px; overflow:auto; }
+  aside h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink); margin:14px 0 6px; }
+  aside h2:first-child { margin-top:0; }
+  table { width:100%; border-collapse:collapse; }
+  td { padding:4px 0; border-bottom:1px solid #eee; vertical-align:top; }
+  td:first-child { padding-right:10px; }
+  td:last-child { text-align:right; font-variant-numeric:tabular-nums; }
+  .note { font-size:12px; color:#555; margin-top:10px; }
+  [hidden] { display:none !important; }
+  .dim { position:absolute; transform:translate(-50%,-50%); pointer-events:none; white-space:nowrap; font-size:11px; line-height:1; padding:3px 6px; border-radius:5px; background:rgba(255,255,255,.88); color:var(--ink); border:1px solid rgba(31,58,61,.35); font-variant-numeric:tabular-nums; }
+  .hint { position:absolute; left:12px; bottom:10px; font-size:12px; color:#555; background:rgba(255,255,255,.8); padding:3px 8px; border-radius:6px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">XANVOR</span>
+  <h1>Washing cup</h1><span class="rev">R10</span>
+  <div class="sub">Mirror-polished steel bowl · two resin handles set 75° apart · separate travertine base with engraved logo — the cup rests on the base, it is not fixed</div>
+</header>
+<form id="gate" autocomplete="off">
+  <label for="pw">Password</label>
+  <input id="pw" type="password" required autofocus>
+  <button id="go" type="submit">Open</button>
+  <p id="gerr" role="alert"></p>
+</form>
+<div class="bar" hidden>
+  <button data-view="angle" class="on">Handles</button>
+  <button data-view="front">Front</button>
+  <button data-view="logo">Logo</button>
+  <button data-view="side">Side</button>
+  <button data-view="top">Top</button>
+  <button id="lift">Lift cup off base</button>
+  <button id="dimbtn" class="on">Dimensions</button>
+  <label>Size unit <select id="unit"><option value="mm">mm</option><option value="cm">cm</option><option value="in">inch</option></select></label>
+</div>
+<main hidden>
+  <div id="stage">
+    <canvas id="c"></canvas>
+    <div id="msg"><div><b>Loading 3D model…</b><span id="pct"></span></div></div>
+    <div class="hint">Drag to rotate · scroll or pinch to zoom</div>
+  </div>
+  <aside>
+    <h2>Parts</h2>
+    <table>
+      <tr><td>Bowl</td><td>Stainless steel, mirror polish</td></tr>
+      <tr><td>Handles, balls</td><td>Resin, cream marble effect</td></tr>
+      <tr><td>Fixings</td><td>Stainless steel</td></tr>
+      <tr><td>Base</td><td>Natural travertine</td></tr>
+      <tr><td>Logo</td><td>Engraved, dark colour fill</td></tr>
+    </table>
+    <p class="note">Digital review model. Colours and stone texture are indicative; natural stone varies piece to piece. Sizes are subject to confirmation on a physical sample.</p>
+  </aside>
+</main>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from './vendor/OrbitControls.js';
+import { GLTFLoader } from './vendor/GLTFLoader.js';
+
+let DIMS = [];   // dimension marks, mm - filled in after the password is accepted
+const dimEls = [];
+const fmt = { mm: v => v.toFixed(v % 1 ? 1 : 0) + ' mm', cm: v => (v / 10).toFixed(1) + ' cm', in: v => (v / 25.4).toFixed(2) + ' in' };
+const unitSel = document.getElementById('unit');
+function drawSizes() { for (const { el, d } of dimEls) el.textContent = d.label.replace(/\{(\d)\}/g, (_, k) => fmt[unitSel.value](d.mm[+k])); }
+unitSel.onchange = drawSizes;
+
+const msg = document.getElementById('msg'), pct = document.getElementById('pct');
+const canvas = document.getElementById('c'), stage = document.getElementById('stage');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); }
+catch (e) { msg.innerHTML = '<div><b>3D view is not available on this device.</b>Please open this link in a recent Chrome, Safari or Edge browser.</div>'; throw e; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xeadfce);
+{ // bright studio surround so the polished bowl reads as mirror steel
+  const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 512; const x = cv.getContext('2d');
+  const g = x.createLinearGradient(0, 0, 0, 512); g.addColorStop(0, '#ffffff'); g.addColorStop(0.42, '#f4efe8'); g.addColorStop(0.56, '#ddd2c4'); g.addColorStop(1, '#a39483');
+  x.fillStyle = g; x.fillRect(0, 0, 1024, 512);
+  const hgrad = x.createLinearGradient(0, 0, 1024, 0);   // soft-edged studio reflections, as in the locked render; the bowl itself is plain
+  for (const [p, al] of [[0, 0.34], [0.1, 0.03], [0.2, 0.38], [0.3, 0], [0.42, 0.42], [0.5, 0.05], [0.6, 0.34], [0.72, 0], [0.85, 0.38], [0.93, 0.03], [1, 0.34]]) hgrad.addColorStop(p, `rgba(52,46,40,${al})`);
+  x.fillStyle = hgrad; x.fillRect(0, 0, 1024, 512);
+  const t = new THREE.CanvasTexture(cv); t.mapping = THREE.EquirectangularReflectionMapping; t.colorSpace = THREE.SRGBColorSpace;
+  scene.environment = new THREE.PMREMGenerator(renderer).fromEquirectangular(t).texture;
+}
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(0.5, 0.55, 0.6); scene.add(key);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+key.castShadow = true; key.shadow.mapSize.set(4096, 4096); key.shadow.bias = -0.0001; key.shadow.normalBias = 0.0003;
+Object.assign(key.shadow.camera, { left: -0.14, right: 0.14, top: 0.24, bottom: -0.04, near: 0.2, far: 2 }); key.shadow.camera.updateProjectionMatrix();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 10);
+const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.minDistance = 0.12; controls.maxDistance = 2;
+const VIEWS = { angle: [[0.46, 0.33, 0.66], [0.015, 0.105, 0]], front: [[0, 0.16, 0.85], [0, 0.105, 0]], logo: [[0.0, 0.07, 0.30], [0, 0.024, 0]], side: [[0.85, 0.16, 0], [0, 0.105, 0]], top: [[0, 0.9, 0.02], [0, 0.1, 0]] };
+function setView(n) { const [p, t] = VIEWS[n]; camera.position.set(...p); controls.target.set(...t); controls.update();
+  document.querySelectorAll('[data-view]').forEach(b => b.classList.toggle('on', b.dataset.view === n)); }
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => setView(b.dataset.view));
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(stage); resize(); setView('angle');
+
+const cup = new THREE.Group(); scene.add(cup);
+// ---- dimension marks drawn on the model ----
+const dimGroups = { all: new THREE.Group(), cup: new THREE.Group(), base: new THREE.Group(), recess: new THREE.Group() };
+scene.add(dimGroups.all, dimGroups.base, dimGroups.recess); cup.add(dimGroups.cup);
+const dimMat = new THREE.LineBasicMaterial({ color: 0x1f3a3d, depthTest: false, transparent: true });
+let dimsOn = true; const dimBtn = document.getElementById('dimbtn');
+dimBtn.onclick = () => { dimsOn = !dimsOn; dimBtn.classList.toggle('on', dimsOn); };
+function buildDims() {
+  for (const d of DIMS) {
+    const a = new THREE.Vector3(...d.a), b = new THREE.Vector3(...d.b), pts = [a, b];
+    if (d.t) { const t = new THREE.Vector3(...d.t).multiplyScalar(0.004); for (const p of [a, b]) pts.push(p.clone().sub(t), p.clone().add(t)); }
+    const line = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), dimMat); line.renderOrder = 10; dimGroups[d.g].add(line);
+    const anchor = new THREE.Object3D(); anchor.position.copy(d.at ? new THREE.Vector3(...d.at) : a.clone().add(b).multiplyScalar(0.5)); dimGroups[d.g].add(anchor);
+    const el = document.createElement('div'); el.className = 'dim'; el.hidden = true; stage.appendChild(el); dimEls.push({ el, anchor, d });
+  }
+  drawSizes();
+}
+const v3 = new THREE.Vector3();
+function placeDims(up) {
+  dimGroups.all.visible = dimsOn && !up; dimGroups.recess.visible = dimsOn && up; dimGroups.cup.visible = dimGroups.base.visible = dimsOn;
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for (const { el, anchor, d } of dimEls) {
+    if (!dimGroups[d.g].visible) { el.hidden = true; continue; }
+    anchor.getWorldPosition(v3).project(camera); el.hidden = v3.z > 1;
+    el.style.left = ((v3.x + 1) / 2 * w) + 'px'; el.style.top = ((1 - v3.y) / 2 * h) + 'px';
+  }
+}
+let lifted = false, liftY = 0;
+const liftBtn = document.getElementById('lift');
+liftBtn.onclick = () => { lifted = !lifted; liftBtn.classList.toggle('on', lifted); liftBtn.textContent = lifted ? 'Put cup back on base' : 'Lift cup off base'; };
+
+const showModel = buf => new GLTFLoader().parse(buf, '', g => {
+  scene.add(g.scene); g.scene.updateMatrixWorld(true);
+  const parts = []; g.scene.traverse(o => { if (o.isMesh) parts.push(o); });
+  const D = THREE.DoubleSide;
+  // stone-like finishes drawn in the shader from the part's own coordinates (no image files)
+  const NOISE = `
+    float h3(vec3 p){ p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+    float n3(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
+                 mix(mix(h3(i + vec3(0,0,1)), h3(i + vec3(1,0,1)), f.x), mix(h3(i + vec3(0,1,1)), h3(i + vec3(1,1,1)), f.x), f.y), f.z); }
+    float fbm(vec3 p){ float a = 0.5, s = 0.0; for (int i = 0; i < 5; i++) { s += a * n3(p); p *= 2.03; a *= 0.5; } return s; }
+    vec3 lin(vec3 c){ return pow(c, vec3(2.2)); }`;
+  const FINISH = {
+    resin: `vec3 q = vObjPos * 1000.0;
+      float cloud = smoothstep(0.25, 0.75, fbm(q * 0.022 + 7.0));
+      float w = fbm(q * 0.04);
+      float vein = pow(1.0 - abs(sin((q.y * 0.045 + q.x * 0.02 + w * 4.5) * 3.14159)), 4.0);
+      vec3 c = mix(lin(vec3(0.88, 0.74, 0.52)), lin(vec3(0.95, 0.87, 0.70)), cloud);
+      c = mix(c, lin(vec3(0.99, 0.96, 0.88)), vein * 0.55);
+      diffuseColor.rgb = c;`,
+    base: `vec3 q = vObjPos * 1000.0;
+      float m = fbm(vec3(q.x, q.y * 2.5, q.z) * 0.03);
+      vec3 c = mix(lin(vec3(0.80, 0.69, 0.53)), lin(vec3(0.91, 0.83, 0.69)), m);
+      float pit = n3(vec3(q.x, q.y * 1.6, q.z) * 0.38 + 3.0) * 0.7 + n3(q * 0.9) * 0.3;
+      c = mix(c, lin(vec3(0.60, 0.47, 0.33)), smoothstep(0.74, 0.80, pit) * 0.8);
+      c *= 0.93 + 0.14 * n3(q * 3.0);
+      diffuseColor.rgb = c;`,
+  };
+  const finish = (m, kind) => { m.onBeforeCompile = sh => {
+    sh.vertexShader = 'varying vec3 vObjPos;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\n vObjPos = position;');
+    sh.fragmentShader = 'varying vec3 vObjPos;\n' + NOISE + '\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n' + FINISH[kind]);
+  }; return m; };
+  const MAT = {
+    steel: new THREE.MeshStandardMaterial({ color: 0xe6e7ea, metalness: 1, roughness: 0.07, side: D }),
+    hw: new THREE.MeshStandardMaterial({ color: 0xd4d5d8, metalness: 1, roughness: 0.2, side: D }),
+    resin: finish(new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08, side: D }), 'resin'),
+    base: finish(new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 }), 'base'),
+    logo: new THREE.MeshStandardMaterial({ color: 0x4a3622, roughness: 0.9, side: D }),
+  };
+  for (const o of parts) {
+    const n = o.name;
+    o.material = n.startsWith('bowl') ? MAT.steel : n.startsWith('base_travertine_logo') ? MAT.logo : n.startsWith('base_travertine') ? MAT.base : n.includes('resin') ? MAT.resin : MAT.hw;
+    if (o.geometry.attributes.color) o.geometry.deleteAttribute('color');
+    if (n.startsWith('bowl')) o.geometry.computeVertexNormals();
+    o.castShadow = true; o.receiveShadow = true;
+    if (!n.startsWith('base_travertine')) cup.attach(o);
+  }
+  window.__render = () => { liftY = lifted ? 0.07 : 0; cup.position.y = liftY; controls.update(); scene.updateMatrixWorld(); placeDims(lifted); renderer.render(scene, camera); return canvas.toDataURL('image/jpeg', 0.8); };
+  msg.style.display = 'none'; window.__ready = true;
+}, e => { msg.innerHTML = '<div><b>The 3D model could not be loaded.</b>Please check the connection and reload the page.</div>'; window.__error = String(e); });
+
+// ---- password gate: the model and the size table are stored encrypted; the password is the key ----
+const gate = document.getElementById('gate'), pw = document.getElementById('pw'), go = document.getElementById('go'), gerr = document.getElementById('gerr');
+async function grab(url) { const r = await fetch(url); if (!r.ok) throw new Error('load'); return new Uint8Array(await r.arrayBuffer()); }
+const unseal = (b, key) => crypto.subtle.decrypt({ name: 'AES-GCM', iv: b.slice(16, 28) }, key, b.slice(28));
+if (document.querySelector('meta[name="viewer-open"]')) {   // private preview copy: no password, plain files
+  gate.hidden = true; document.querySelector('.bar').hidden = false; document.querySelector('main').hidden = false;
+  fetch('./models/sizes.json').then(r => r.json()).then(j => { DIMS = j.dims; buildDims(); return fetch('./models/cup.wasm'); })
+    .then(r => r.arrayBuffer()).then(showModel).catch(e => { msg.innerHTML = '<div><b>The 3D model could not be loaded.</b>Please check the connection and reload the page.</div>'; window.__error = String(e); });
+}
+gate.addEventListener('submit', async ev => {
+  ev.preventDefault(); gerr.textContent = ''; go.disabled = true; go.textContent = 'Opening…';
+  let step = 'load';
+  try {
+    const small = await grab('./models/sizes.enc');
+    const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw.value), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: small.slice(0, 16), iterations: 600000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    step = 'password';
+    DIMS = JSON.parse(new TextDecoder().decode(await unseal(small, key))).dims;
+    pw.value = ''; gate.hidden = true; document.querySelector('.bar').hidden = false; document.querySelector('main').hidden = false; buildDims();
+    step = 'load'; showModel(await unseal(await grab('./models/cup.enc'), key));
+  } catch (e) {
+    if (gate.hidden) { msg.innerHTML = '<div><b>The 3D model could not be loaded.</b>Please check the connection and reload the page.</div>'; window.__error = String(e); }
+    else { gerr.textContent = step === 'password' ? 'Wrong password.' : 'Could not load. Please check the connection and try again.'; go.disabled = false; go.textContent = 'Open'; }
+  }
+});
+
+renderer.setAnimationLoop(() => { liftY += ((lifted ? 0.07 : 0) - liftY) * 0.12; cup.position.y = liftY; controls.update(); scene.updateMatrixWorld(); placeDims(liftY > 0.02); renderer.render(scene, camera); });
+</script>
+</body>
+</html>
