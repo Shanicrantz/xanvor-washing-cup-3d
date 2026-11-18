@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>XANVOR · Washing cup · R10</title>
+<title>XANVOR · Washing cup · R11</title>
 <style>
   :root { --ink:#1f3a3d; --gold:#c9a45c; --paper:#f3f1ec; --line:#d9d5cb; }
   * { box-sizing: border-box; }
@@ -53,7 +53,7 @@
 <body>
 <header>
   <span class="brand">XANVOR</span>
-  <h1>Washing cup</h1><span class="rev">R10</span>
+  <h1>Washing cup</h1><span class="rev">R11</span>
   <div class="sub">Mirror-polished steel bowl · two resin handles set 75° apart · separate travertine base with engraved logo — the cup rests on the base, it is not fixed</div>
 </header>
 <form id="gate" autocomplete="off">
@@ -68,7 +68,7 @@
 <div class="bar" hidden>
   <button data-view="angle" class="on">Handles</button>
   <button data-view="front">Front</button>
-  <button data-view="logo">Logo</button>
+  <button data-view="logo">Logo (underside)</button>
   <button data-view="side">Side</button>
   <button data-view="top">Top</button>
   <button id="lift">Lift cup off base</button>
@@ -89,7 +89,7 @@
       <tr><td>Handles, balls</td><td>Resin, cream marble effect</td></tr>
       <tr><td>Fixings</td><td>Stainless steel</td></tr>
       <tr><td>Base</td><td>Natural travertine</td></tr>
-      <tr><td>Logo</td><td>Engraved, dark colour fill</td></tr>
+      <tr><td>Logo</td><td>Engraved under the base, dark colour fill</td></tr>
     </table>
     <p class="note"><b>© XANVOR.</b> Design shared for review only; please do not copy or circulate.</p>
     <p class="note">Digital review model. Colours and stone texture are indicative; natural stone varies piece to piece. Sizes are subject to confirmation on a physical sample.</p>
@@ -132,7 +132,7 @@ key.castShadow = true; key.shadow.mapSize.set(4096, 4096); key.shadow.bias = -0.
 Object.assign(key.shadow.camera, { left: -0.14, right: 0.14, top: 0.24, bottom: -0.04, near: 0.2, far: 2 }); key.shadow.camera.updateProjectionMatrix();
 const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 10);
 const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.minDistance = 0.12; controls.maxDistance = 2;
-const VIEWS = { angle: [[0.46, 0.33, 0.66], [0.015, 0.105, 0]], front: [[0, 0.16, 0.85], [0, 0.105, 0]], logo: [[0.0, 0.07, 0.30], [0, 0.024, 0]], side: [[0.85, 0.16, 0], [0, 0.105, 0]], top: [[0, 0.9, 0.02], [0, 0.1, 0]] };
+const VIEWS = { angle: [[0.46, 0.33, 0.66], [0.015, 0.105, 0]], front: [[0, 0.16, 0.85], [0, 0.105, 0]], logo: [[0, -0.42, 0.05], [0, 0.03, 0]], side: [[0.85, 0.16, 0], [0, 0.105, 0]], top: [[0, 0.9, 0.02], [0, 0.1, 0]] };
 function setView(n) { const [p, t] = VIEWS[n]; camera.position.set(...p); controls.target.set(...t); controls.update();
   document.querySelectorAll('[data-view]').forEach(b => b.classList.toggle('on', b.dataset.view === n)); }
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => setView(b.dataset.view));
